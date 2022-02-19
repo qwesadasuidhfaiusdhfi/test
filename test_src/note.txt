@@ -1,0 +1,62 @@
+""" wd.find_element(By.ID, 'username').send_keys('byhy')
+wd.find_element(By.CLASS_NAME, 'password').send_keys('sdfsdf')
+wd.find_element(By.TAG_NAME, 'input').send_keys('sdfsdf')
+wd.find_element(By.CSS_SELECTOR,'button[type=submit]').click() """
+""" 
+xpath定位
+绝对路径：/开头
+相对路劲：//开头
+相对路径+索引：先定位到要找的，看是不是唯一，如果不是就网上面找找到一个唯一的就往下写路径 //form/span[1]/input
+相对路径+属性：//input[@autocomplete='off']
+相对路径+通配符
+相对路径+部分属性值
+相对路径+文本
+我们可以把 id 想象成元素的编号， 是用来在html中标记该元素的。 根据规范， 如果元素有id属性 ，这个id 必须是当前html中唯一的。
+所以如果元素有id， 根据id选择元素是最简单高效的方式。 """
+WebDriver 对象 选择元素的范围是 整个 web页面， 而
+
+WebElement 对象 选择元素的范围是 该元素的内部。
+#tag class id
+#tag 例如div 
+# 根据 tag名 选择元素的 CSS Selector 语法非常简单，直接写上tag名即可 
+# elements = wd.find_elements(By.CSS_SELECTOR, 'div')
+#根据id属性 选择元素的语法是在id号前面加上一个井号： #id值
+#  element = wd.find_element(By.CSS_SELECTOR, '#searchtext')
+#根据class属性 选择元素的语法是在 class 值 前面加上一个点：
+#  elements = wd.find_elements(By.CSS_SELECTOR, '.animal')
+#通过 WebElement 对象的 text属性 可以获取该元素 在网页中的文本内容。
+# 取出列表中的每个 WebElement对象，打印出其text属性的值
+# text属性就是该 WebElement对象对应的元素在网页中的文本内容
+
+这个 iframe 元素非常的特殊， 在html语法中，frame 元素 或者iframe元素的内部 会包含一个 被嵌入的 另一份html文档。
+
+在我们使用selenium打开一个网页是， 我们的操作范围 缺省是当前的 html ， 并不包含被嵌入的html文档里面的内容。
+
+如果我们要 操作 被嵌入的 html 文档 中的元素， 就必须 切换操作范围 到 被嵌入的文档中。
+
+怎么切换呢？
+
+使用 WebDriver 对象的 switch_to 属性，像这样
+
+wd.switch_to.frame(frame_reference)
+其中， frame_reference 可以是 frame 元素的属性 name 或者 ID 。
+
+比如这里，就可以填写 iframe元素的id ‘frame1’ 或者 name属性值 ‘innerFrame’。
+
+像这样
+
+wd.switch_to.frame('frame1')
+或者
+
+wd.switch_to.frame('innerFrame')
+
+也可以填写frame 所对应的 WebElement 对象。
+
+我们可以根据frame的元素位置或者属性特性，使用find系列的方法，选择到该元素，得到对应的WebElement对象
+
+比如，这里就可以写
+
+wd.switch_to.frame(wd.find_element(By.TAG_NAME, "iframe"))
+然后，就可以进行后续操作frame里面的元素了。
+
+上面的例子的正确代码如下
